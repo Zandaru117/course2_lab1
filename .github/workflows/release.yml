@@ -34,16 +34,14 @@ jobs:
         with:
           submodules: true
       
-
       - name: Install Boost via Chocolatey
         run: choco install boost-msvc-14.3 -y
 
       - name: Configure CMake
         run: |
-          cmake . -DPATCH_VERSION=${{ github.run_number }}
           mkdir build
           cd build
-          cmake .. -DBOOST_ROOT="C:/local/boost_1_83_0"
+          cmake .. -DPATCH_VERSION=${{ github.run_number }}
 
       - name: Build
         run: |
@@ -51,10 +49,14 @@ jobs:
           cmake --build . --config Release
       
       - name: Run tests
-        run: ctest -C Release --verbose
+        run: |
+          cd build
+          ctest -C Release --verbose
       
       - name: Pack
-        run: cpack --config CPackConfig.cmake
+        run: |
+          cd build
+          cpack --config CPackConfig.cmake
       
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
