@@ -36,7 +36,7 @@ jobs:
       
 
       - name: Install Boost via Chocolatey
-        run: choco install boost-msvc-14.3 -y
+        run: choco install boost -y
 
       - name: Configure CMake
         run: |
