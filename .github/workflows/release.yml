@@ -51,7 +51,7 @@ jobs:
       - name: Run tests
         run: |
           cd build
-          ctest -C Release --verbose
+          ctest -C Release --output-on-failure --verbose
       
       - name: Pack
         run: |
