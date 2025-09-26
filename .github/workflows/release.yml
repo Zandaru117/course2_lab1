@@ -41,7 +41,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -DPATCH_VERSION=${{ github.run_number }}
+          cmake .. -DPATCH_VERSION=${{ github.run_number }} -DBOOST_STATIC=ON
 
       - name: Build
         run: |
@@ -53,10 +53,11 @@ jobs:
           cd build
           ctest -C Release --output-on-failure --verbose
       
-      - name: Pack
+      - name: Create package
         run: |
-          cd build
-          cpack --config CPackConfig.cmake
+          mkdir package
+          copy build\Release\helloworld.exe package\
+          powershell -Command "Compress-Archive -Path 'package\*' -DestinationPath 'helloworld-${{ github.run_number }}-Windows.zip' -Force"
       
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
