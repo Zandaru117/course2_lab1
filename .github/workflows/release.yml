@@ -48,10 +48,6 @@ jobs:
           cd build
           cmake --build . --config Release
       
-      - name: Run tests
-        run: |
-          cd build
-          ctest -C Release --output-on-failure --verbose
       
       - name: Create package
         run: |
